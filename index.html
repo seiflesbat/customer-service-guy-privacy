@@ -93,19 +93,19 @@
     <main>
       <article>
         <h1>Privacy Policy</h1>
-        <p class="updated">Customer Service Guy - Last updated May 9, 2026</p>
+        <p class="updated">Customer Service Guy - Last updated July 10, 2026</p>
 
         <p>
           This Privacy Policy explains how Customer Service Guy handles
-          candidate information when people use the Android app to prepare an
-          email-based referral application for customer service opportunities in
-          Lisbon, Portugal.
+          candidate information when people use the Android app to submit and
+          track a recruitment application dossier for customer service
+          opportunities in Lisbon, Portugal.
         </p>
 
         <p class="summary">
-          Customer Service Guy does not upload CVs to Firebase or to any
-          app-controlled server. The app opens the user's email app with the
-          selected CV attached, and the user must send the email manually.
+          Customer Service Guy does not use email for application submission.
+          The app stores application dossiers, recruiter status updates,
+          recruiter messages, and private CV files in secured cloud services.
         </p>
 
         <h2>Developer and contact</h2>
@@ -118,27 +118,35 @@
         <h2>Information the app handles</h2>
         <p>The app may handle the following information during use:</p>
         <ul>
+          <li>The candidate's full name.</li>
+          <li>The candidate's email address or WhatsApp contact.</li>
           <li>The selected referral language, such as German or Dutch.</li>
-          <li>Eligibility confirmations selected by the candidate.</li>
+          <li>
+            Confirmations for English communication, work eligibility, role and
+            process understanding, and private dossier storage consent.
+          </li>
           <li>An English CV or resume file chosen by the candidate.</li>
           <li>
             Information contained in the candidate's CV, such as name, contact
             details, work history, education, and skills.
           </li>
+          <li>
+            An account identifier and, when Google sign-in is chosen, basic
+            Google account information such as an email address.
+          </li>
+          <li>
+            A device notification token used to deliver application and message
+            updates when notifications are enabled.
+          </li>
         </ul>
-        <p>
-          The app does not ask the candidate to type their name, email address,
-          or phone number into the app form. Those details may still be included
-          inside the CV or in the email sent by the candidate's email app.
-        </p>
 
-        <h2>How information is sent</h2>
+        <h2>How information is submitted</h2>
         <p>
-          When the candidate taps the send application button, the app opens an
-          email app on the device with a prepared message addressed to
-          <a href="mailto:algorise@usa.com">algorise@usa.com</a>. The selected
-          CV is attached to that email. The candidate must review and send the
-          email before any information is received by Algorise.
+          When the candidate submits the application form, the app creates a
+          private application dossier in the configured cloud backend. The CV is
+          stored privately with that dossier. Approved recruiter accounts can
+          view the dossier, open the CV, update the application status, and send
+          messages inside the app.
         </p>
 
         <h2>How information is used</h2>
@@ -160,25 +168,31 @@
 
         <h2>Storage and retention</h2>
         <p>
-          The app does not store CVs in an app-controlled database or cloud
-          storage service. Any CV sent by the candidate is stored in the
-          recipient email inbox and any recruitment systems where the referral
-          is processed.
+          The current production service uses Supabase Auth, Postgres, and
+          Storage for account access, application dossiers, and private CV
+          files. Firebase Authentication, Cloud Firestore, and Cloud Storage may
+          be used as a fallback for compatible deployments. Firebase Cloud
+          Messaging supplies device notification tokens for application and
+          message alerts. The app does not send CVs through email.
         </p>
         <p>
           Candidate information is kept only for as long as reasonably needed
           for recruitment, referral, communication, legal, or record-keeping
-          purposes. A candidate can request deletion by emailing
+          purposes. Candidates can remove their CV or delete their application
+          from the app. They can also request access, correction, or deletion by
+          emailing
           <a href="mailto:algorise@usa.com">algorise@usa.com</a>.
         </p>
 
         <h2>Security</h2>
         <p>
-          The app uses the Android system file picker to let the candidate
-          select a CV file and passes that file to the chosen email app. The
-          security of the final email delivery depends on the candidate's email
-          provider and email app. Algorise limits access to received candidate
-          information to people who need it for recruitment-related purposes.
+          The app uses authenticated accounts, Supabase row-level security and
+          storage policies, or Firebase security rules to restrict access.
+          Session credentials stored on the Android device are protected using
+          Android Keystore encryption. Candidates can access their own dossiers.
+          Approved recruiter accounts can access applicant dossiers, open CVs,
+          update statuses, and send messages. Algorise limits access to people
+          who need the information for recruitment-related purposes.
         </p>
 
         <h2>Children</h2>
@@ -190,10 +204,12 @@
 
         <h2>Third-party services</h2>
         <p>
-          The app does not use Firebase, analytics SDKs, advertising SDKs, or an
-          app-controlled backend for CV submission. The candidate's chosen email
-          provider may process the email and attachment according to that
-          provider's own privacy policy.
+          The app uses Supabase for authentication, database, and file storage;
+          Google sign-in when a user chooses that option; and Firebase Cloud
+          Messaging for push notifications. Firebase authentication, database,
+          storage, and App Check services may be used by the fallback backend.
+          These providers may process technical information needed to operate
+          their services. The app does not use advertising or analytics SDKs.
         </p>
 
         <h2>Changes to this policy</h2>
