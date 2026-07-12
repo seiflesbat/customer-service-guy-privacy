@@ -113,17 +113,12 @@
         app/account identifiers, and security-event metadata.</p>
     </section>
 
-    <section id="scanning">
-      <h2>CV malware and security scanning</h2>
-      <p>Before private storage, the server performs file-structure checks and an automated malware/security scan.
-        CV bytes are sent to the configured file-security processor only for this purpose. A generic filename is used;
-        candidate name, contact, referral code, and application ID are not sent as separate scanner metadata. The
-        scanner necessarily processes personal information contained inside the CV. Include only information needed
-        for the job application; do not include government ID numbers, bank details, health information, or other
-        unnecessary sensitive data.</p>
-      <div class="notice">The planned processor is Cloudmersive through a contractually approved EU or UK regional
-        endpoint. Production must not use its default North America endpoint. Submission remains fail-closed until the
-        regional URL, production key/tier, DPA, transfer safeguards, subprocessors, quota, and retention terms are approved.</div>
+    <section id="cv-storage">
+      <h2>CV storage</h2>
+      <p>Before private storage, the server checks the CV's supported format, file signature, size, and filename.
+        CV bytes are stored in private platform Storage and are not sent to a third-party file-scanning provider.
+        Include only information needed for the job application; do not include government ID numbers, bank details,
+        health information, or other unnecessary sensitive data.</p>
     </section>
 
     <section id="payouts">
@@ -152,7 +147,6 @@
         <li><strong>Google:</strong> optional Google sign-in.</li>
         <li><strong>GitHub Pages:</strong> public privacy/deletion hosting and the HTTPS OAuth return page.</li>
         <li><strong>Firebase Cloud Messaging:</strong> push notifications.</li>
-        <li><strong>Configured regional file-security provider:</strong> planned Cloudmersive CV scan.</li>
         <li><strong>Android email/phone apps:</strong> only when the user opens an explicit external contact action.</li>
       </ul>
       <p><strong>External referral recipient:</strong> when a candidate requests an employee referral, the owner may
@@ -166,7 +160,7 @@
         page never receives an access token, refresh token, CV, candidate contact, referral code, or payout information,
         and removes the one-time response from browser history before opening the app.</p>
       <p>Data is transmitted using HTTPS. International processing requires the provider's applicable contractual and
-        transfer safeguards. Server secrets, payout encryption keys, scanner keys, full push tokens, and raw IBANs are
+        transfer safeguards. Server secrets, payout encryption keys, full push tokens, and raw IBANs are
         not embedded in the Android application.</p>
     </section>
 
@@ -180,8 +174,6 @@
         <li>Recruiter payout secrets are removed and referral codes retired on account deletion.</li>
         <li>Pseudonymous financial, moderation, and audit evidence is kept only for applicable accounting, tax,
           fraud-prevention, dispute, security, or legal duties, then deleted or irreversibly anonymized.</li>
-        <li>Scanner processing and retention must match the approved regional contract; threat analytics is not enabled
-          without a separately approved need and disclosure.</li>
       </ul>
       <p>Where a service provider holds associated data on behalf of Customer Service Guy, it is deleted or the provider
         is instructed to delete it in accordance with the applicable contract and legitimate retention requirements.</p>
@@ -198,7 +190,7 @@
       <h2>Security and choices</h2>
       <p>Controls include encrypted transport, private Storage, owner-only CV retrieval, Row Level Security, protected
         server functions, encrypted local sessions, PKCE Google sign-in with one-time state validation, active owner-session
-        checks, server-only secrets, malware scanning, abuse quotas, messaging rate limits, audit events, and scheduled CV cleanup.</p>
+        checks, server-only secrets, abuse quotas, messaging rate limits, audit events, and scheduled CV cleanup.</p>
       <p>Users may apply without a referral code, use anonymous candidate access, decline form consent and not submit,
         report or block in chat, disable Android notifications, and request access, correction, deletion, restriction,
         or another applicable privacy right.</p>
