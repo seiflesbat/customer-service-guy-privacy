@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Return to Customer Service Guy</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #f6f8fb; color: #172033; }
+    main { max-width: 34rem; margin: 12vh auto; padding: 2rem; background: white; border-radius: 1rem;
+      box-shadow: 0 1rem 3rem rgba(20, 34, 64, .12); }
+    a { display: inline-block; margin-top: 1rem; padding: .8rem 1rem; border-radius: .6rem;
+      background: #3457d5; color: white; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Return to Customer Service Guy</h1>
+    <p id="status">Finishing secure Google sign-in…</p>
+    <a id="open-app" hidden>Open the app</a>
+  </main>
+  <script>
+    (() => {
+      const incoming = new URLSearchParams(window.location.search);
+      const role = incoming.get("role");
+      const state = incoming.get("state");
+      const code = incoming.get("code");
+      const error = incoming.get("error");
+      const errorDescription = incoming.get("error_description");
+      const validRole = role === "candidate" || role === "recruiter";
+      const validState = /^[A-Za-z0-9_-]{43,128}$/.test(state || "");
+      const validCode = typeof code === "string" && code.length > 0 && code.length <= 4096;
+
+      if (!validRole || !validState || (!validCode && !error)) {
+        document.getElementById("status").textContent =
+          "This sign-in return link is invalid. Close this page and start Google sign-in again in the app.";
+        return;
+      }
+
+      const app = new URL("com.algorise.csg://auth-callback");
+      app.searchParams.set("role", role);
+      app.searchParams.set("state", state);
+      if (validCode) app.searchParams.set("code", code);
+      if (error) app.searchParams.set("error", error.slice(0, 120));
+      if (errorDescription) app.searchParams.set("error_description", errorDescription.slice(0, 240));
+
+      // Remove the one-time authorization response from browser history before
+      // attempting the custom-scheme handoff. The app still validates and
+      // consumes the encrypted state before exchanging a valid PKCE code.
+      try {
+        window.history.replaceState(null, "", window.location.pathname);
+      } catch (_) {
+        // The handoff remains safe if a restrictive browser blocks history APIs.
+      }
+
+      const openApp = document.getElementById("open-app");
+      openApp.href = app.toString();
+      openApp.hidden = false;
+      window.location.replace(app.toString());
+    })();
+  </script>
+</body>
+</html>
