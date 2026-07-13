@@ -30,7 +30,9 @@
       const code = incoming.get("code");
       const error = incoming.get("error");
       const errorDescription = incoming.get("error_description");
-      const validRole = role === "candidate" || role === "recruiter";
+      const validRole = role === "candidate" ||
+        role === "dashboard" ||
+        role === "recruiter";
       const validState = /^[A-Za-z0-9_-]{43,128}$/.test(state || "");
       const validCode = typeof code === "string" && code.length > 0 && code.length <= 4096;
 
